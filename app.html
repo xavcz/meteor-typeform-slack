@@ -1,0 +1,51 @@
+<head>
+  <title>meteor-typeform-slack</title>
+</head>
+
+<body>
+	{{> header}}
+  {{> app}}
+  {{> footer}}
+</body>
+
+<template name="header">
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-2">
+			<img src="typeform.png" class="logo" alt="typeform" />
+		</div>
+		<div class="col-sm-4">
+			<img src="slack.png" class="logo" alt="slack" />
+		</div>
+	</div>
+</template>
+
+<template name="app">
+	<h1 class="text-center">
+		Auto-invite new members to your community
+	</h1>
+	<div class="jumbotron text-center">
+    <div class="row">
+    	<div class="col-sm-6">
+    		<h3>Connect your Typeform</h3>
+    		<ul>
+    			<li>Typeform UID</li>
+    			<li>Typeform API Key</li>
+    			<li>Typeform Email Field</li>
+    			<li>Typeform First Name Field</li>
+    			<li>Typeform Last Name Field</li>
+    		</ul>
+    	</div>
+    	<div class="col-sm-6">
+    		<h3>Connect your Slack Team</h3>	
+    		<ul>
+    			<li>Slack Team Name</li>
+    			<li>Slack Admin Token</li>
+    		</ul>
+    	</div>
+    </div>
+	</div>
+</template>
+
+<template name="footer">
+	<p class="text-center">Developed by <a href="https://twitter.com/xavizalote">@xavizalote</a></p>
+</template>
