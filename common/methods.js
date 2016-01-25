@@ -1,3 +1,5 @@
+Credentials.methods = {};
+
 Credentials.methods.insertTypeformLocally = new ValidatedMethod({
 		name: 'Credentials.methods.insertTypeform',
 		validate: Credentials.typeformSchema.validator(),
