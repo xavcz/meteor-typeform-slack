@@ -2,7 +2,33 @@
   <h1 class="text-center">
     Auto-invite new members to your community
   </h1>
-  <div class="jumbotron text-center">
-    {{> quickForm collection="Credentials" id="insertCredentials" type="insert"}}
+  <div class="row">
+    <div class="col-md-6">
+      <div>
+        <img src="typeform.png" class="logo" alt="typeform" />
+      </div>
+      <div class="jumbotron text-center">
+        {{#autoForm schema="Credentials.typeformSchema" id="connectTypeform" type="method" meteormethod="Credentials.methods.connectTypeform"}}
+          {{> afQuickField name="formUID"}}
+          {{> afQuickField name="apiKey"}}
+          {{> afQuickField name="email"}}
+          {{> afQuickField name="firstname"}}
+          {{> afQuickField name="lastname"}}
+          <button type="submit">Submit</button>
+        {{/autoForm}}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <img src="slack.png" class="logo" alt="slack" />
+      </div>
+      <div class="jumbotron text-center">
+        {{#autoForm schema="Credentials.slackSchema" id="connectSlack" type="method" meteormethod="Credentials.methods.connectSlack"}}
+          {{> afQuickField name="team" autofocus=""}}
+          {{> afQuickField name="token"}}
+          <button type="submit">Submit</button>
+        {{/autoForm}}
+      </div>
+    </div>
   </div>
 </template>
