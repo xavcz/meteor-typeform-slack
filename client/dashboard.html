@@ -8,14 +8,48 @@
         <img src="typeform.png" class="logo" alt="typeform" />
       </div>
       <div class="jumbotron text-center">
-        {{#autoForm schema="Credentials.typeformSchema" id="connectTypeform" type="method" meteormethod="Credentials.methods.connectTypeform"}}
-          {{> afQuickField name="formUID"}}
-          {{> afQuickField name="apiKey"}}
-          {{> afQuickField name="email"}}
-          {{> afQuickField name="firstname"}}
-          {{> afQuickField name="lastname"}}
-          <button type="submit">Submit</button>
-        {{/autoForm}}
+        <form class="connectTypeform">
+          <div class="form-group">
+            <label for="uid">Form UID</label>
+            <input type="text" name="uid" />
+            {{#each error in errors "uid"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+
+          <div class="form-group">
+            <label for="apiKey">API Key</label>
+            <input type="text" name="token" />
+            {{#each error in errors "apiKey"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Field</label>
+            <input type="text" name="email" />
+            {{#each error in errors "email"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+
+          <div class="form-group">
+            <label for="firstname">Firstname Field</label>
+            <input type="text" name="firstname" />
+            {{#each error in errors "firstname"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+
+          <div class="form-group">
+            <label for="firstname">Lastname Field</label>
+            <input type="text" name="lastname" />
+            {{#each error in errors "lastname"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+          <input type="submit" class="btn btn-default" value="Submit" />
+        </form>
       </div>
     </div>
     <div class="col-md-6">
@@ -23,11 +57,24 @@
         <img src="slack.png" class="logo" alt="slack" />
       </div>
       <div class="jumbotron text-center">
-        {{#autoForm schema="Credentials.slackSchema" id="connectSlack" type="method" meteormethod="Credentials.methods.connectSlack"}}
-          {{> afQuickField name="team" autofocus=""}}
-          {{> afQuickField name="token"}}
-          <button type="submit">Submit</button>
-        {{/autoForm}}
+        <form class="connectSlack">
+          <div class="form-group">
+            <label for="team">Team name</label>
+            <input type="text" name="team" />
+            {{#each error in errors "team"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+
+          <div class="form-group">
+            <label for="token">Admin token</label>
+            <input type="text" name="token" />
+            {{#each error in errors "token"}}
+              <div class="form-error">{{error}}</div>
+            {{/each}}
+          </div>
+          <input type="submit" class="btn btn-default" value="Submit" />
+        </form>
       </div>
     </div>
   </div>
