@@ -18,37 +18,14 @@
           </div>
 
           <div class="form-group">
-            <label for="apiKey">API Key</label>
-            <input type="text" name="token" />
-            {{#each error in errors "apiKey"}}
+            <label for="key">API Key</label>
+            <input type="text" name="key" />
+            {{#each error in errors "key"}}
               <div class="form-error">{{error}}</div>
             {{/each}}
           </div>
 
-          <div class="form-group">
-            <label for="email">Email Field</label>
-            <input type="text" name="email" />
-            {{#each error in errors "email"}}
-              <div class="form-error">{{error}}</div>
-            {{/each}}
-          </div>
-
-          <div class="form-group">
-            <label for="firstname">Firstname Field</label>
-            <input type="text" name="firstname" />
-            {{#each error in errors "firstname"}}
-              <div class="form-error">{{error}}</div>
-            {{/each}}
-          </div>
-
-          <div class="form-group">
-            <label for="firstname">Lastname Field</label>
-            <input type="text" name="lastname" />
-            {{#each error in errors "lastname"}}
-              <div class="form-error">{{error}}</div>
-            {{/each}}
-          </div>
-          <input type="submit" class="btn btn-default" value="Submit" />
+          <input type="submit" class="btn btn-default" value="Test the connection" />
         </form>
       </div>
     </div>
@@ -59,8 +36,8 @@
       <div class="jumbotron text-center">
         <form class="connectSlack">
           <div class="form-group">
-            <label for="team">Team name</label>
-            <input type="text" name="team" />
+            <label for="team">Team url</label>
+            <input type="text" name="team" placeholder="http://your-team.slack.com" />
             {{#each error in errors "team"}}
               <div class="form-error">{{error}}</div>
             {{/each}}
@@ -68,14 +45,19 @@
 
           <div class="form-group">
             <label for="token">Admin token</label>
-            <input type="text" name="token" />
+            <input type="text" name="token" placeholder="xoxp-1234-5678" />
             {{#each error in errors "token"}}
               <div class="form-error">{{error}}</div>
             {{/each}}
           </div>
-          <input type="submit" class="btn btn-default" value="Submit" />
+          <input type="submit" class="btn btn-default" value="Test the connection" />
         </form>
       </div>
+      {{#if slackConnected}}
+        <div class="alert alert-success">
+          Slack connected! Hooray!
+        </div>
+      {{/if}}
     </div>
   </div>
 </template>
