@@ -3,17 +3,29 @@ Template.dashboard.onCreated(function() {
 	this.errors = new ReactiveDict();
 	this.typeform = new ReactiveDict();
 	this.slack = new ReactiveDict();
+
+	this.state.set({
+		typeform: false,
+		slack: false
+	});
 });
 
 Template.dashboard.helpers({
 	errors(fieldName) {
 		return Template.instance().errors.get(fieldName);
 	},
-	slackCredentials(fieldName) {
-		return Template.instance().slack.get(fieldName);
+	credentials(fieldName) {
+		debugger
+		return this.state ? Template.instance()[this.app].get(fieldName) : [];
 	},
-	slackConnected() {
-		return Template.instance().state.get('slack');
+	appConnected(app) {
+		let state = Template.instance().state.get(app);
+		if (state) {
+			return {
+				app,
+				state
+			};
+		}
 	}
 });
 
@@ -26,9 +38,7 @@ Template.dashboard.events({
 			key: event.target.key.value
 		};
 
-		debugger
 		Credentials.methods.connectTypeform.call(data, (err, res) => {
-			debugger
 			if (err) {
 				// handle slack errors
 				const errors = {
