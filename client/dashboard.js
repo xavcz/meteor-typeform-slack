@@ -11,14 +11,13 @@ Template.dashboard.onCreated(function() {
 });
 
 Template.dashboard.helpers({
-	errors(fieldName) {
+	errors (fieldName) {
 		return Template.instance().errors.get(fieldName);
 	},
-	credentials(fieldName) {
-		debugger
+	credentials (fieldName) {
 		return this.state ? Template.instance()[this.app].get(fieldName) : [];
 	},
-	appConnected(app) {
+	appConnected (app) {
 		let state = Template.instance().state.get(app);
 		if (state) {
 			return {
@@ -26,11 +25,14 @@ Template.dashboard.helpers({
 				state
 			};
 		}
+	},
+	readyToStore () {
+		return Template.instance().state.get("typeform") && Template.instance().state.get("slack");
 	}
 });
 
 Template.dashboard.events({
-	'submit .connectTypeform'(event, instance) {
+	'submit .connectTypeform' (event, instance) {
 		event.preventDefault();
 
 		const data = {
@@ -56,7 +58,7 @@ Template.dashboard.events({
 			}
 		});
 	},
-	'submit .connectSlack'(event, instance) {
+	'submit .connectSlack' (event, instance) {
 		event.preventDefault();
 
 		const data = {
