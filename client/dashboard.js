@@ -14,20 +14,11 @@ Template.dashboard.helpers({
 	errors (fieldName) {
 		return Template.instance().errors.get(fieldName);
 	},
-	credentials (fieldName) {
-		return this.state ? Template.instance()[this.app].get(fieldName) : [];
-	},
 	appConnected (app) {
-		let state = Template.instance().state.get(app);
-		if (state) {
-			return {
-				app,
-				state
-			};
-		}
+		return Template.instance().state.get(app);
 	},
-	readyToStore () {
-		return Template.instance().state.get("typeform") && Template.instance().state.get("slack");
+	and (a, b) {
+		return a && b;
 	}
 });
 
@@ -50,11 +41,12 @@ Template.dashboard.events({
 
 				instance.errors.set(errors);
 
-				instance.state.set({typeform: false});
+				instance.state.set({ typeform: false });
 				instance.typeform.set({});
 			} else {
-				instance.state.set({typeform: true});
-				instance.typeform.set(res);
+				instance.state.set({ typeform: true });
+				instance.typeform.set(res.credentials);
+				debugger
 			}
 		});
 	},
@@ -88,11 +80,32 @@ Template.dashboard.events({
 
 				instance.errors.set(errors);
 
-				instance.state.set({slack: false});
+				instance.state.set({ slack: false });
 				instance.slack.set({});
 			} else {
-				instance.state.set({slack: true});
-				instance.slack.set(res);
+				instance.state.set({ slack: true });
+				instance.slack.set(res.credentials);
+				debugger
+			}
+		});
+	},
+	'submit .storeCredentials' (event, instance) {
+		event.preventDefault();
+
+		const typeform = { uid: instance.typeform.get('uid'), key: instance.typeform.get('key') },
+					slack = { team: instance.slack.get('team'), token: instance.slack.get('token') },
+					email = event.target.email.value;
+
+		const credentials = { typeform, slack, email };
+
+		debugger
+
+		Credentials.methods.storeCredentials.call(credentials, (err, credentialsId) => {
+			debugger
+			if (err) {
+				// handle errors
+			} else {
+				console.log(`${credentialsId} stored in Mongo, ready to ping!`);
 			}
 		});
 	}

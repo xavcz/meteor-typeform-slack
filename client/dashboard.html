@@ -27,10 +27,7 @@
 
           <input type="submit" class="btn btn-default" value="Test the connection" />
         </form>
-        {{#with appConnected "typeform"}}
-          {{#each field in credentials "responses"}}
-            {{field}}
-          {{/each}}
+        {{#if appConnected "typeform"}}
           <div class="alert alert-success">
             Typeform connected! Hooray!
           </div>
@@ -38,7 +35,7 @@
           <div class="alert alert-warning">
             Typeform not yet connected...
           </div>
-        {{/with}}
+        {{/if}}
       </div>
     </div>
     <div class="col-md-6">
@@ -64,31 +61,28 @@
           </div>
           <input type="submit" class="btn btn-default" value="Test the connection" />
         </form>
-        {{#with appConnected "slack"}}
+        {{#if appConnected "slack"}}
           <div class="alert alert-success">
             Slack connected! Hooray!
             Response:
-            {{#each field in credentials "slack"}}
-              <li>{{result}}</li>
-            {{/each}}
           </div>
         {{else}}
           <div class="alert alert-warning">
             Slack not yet connected...
           </div>
-        {{/with}}
+        {{/if}}
       </div>
     </div>
   </div>
   <div class="row">
-    {{#if readyToStore}}
+    {{#if (and (appConnected "typeform") (appConnected "slack"))}}
       <div class="jumbotron text-center">
         <h1>Ready to connect both apps!</h1>
         <p>Enter you email address to establish connection.</p>
         <form class="storeCredentials">
           <div class="form-group">
             <label for="email">Email address</label>
-            <input type="text" name="email" />
+            <input type="email" name="email" />
             {{#each error in errors "email"}}
               <div class="form-error">{{error}}</div>
             {{/each}}
