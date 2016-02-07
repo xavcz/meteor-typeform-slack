@@ -98,10 +98,7 @@ Template.dashboard.events({
 
 		const credentials = { typeform, slack, email };
 
-		debugger
-
 		Credentials.methods.storeCredentials.call(credentials, (err, credentialsId) => {
-			debugger
 			if (err) {
 				// handle errors
 			} else {
