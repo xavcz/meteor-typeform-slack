@@ -4,23 +4,40 @@ SlackAPI = {
 	// base api call
 	_apiCall: function(method, params, callback) {
 		callback  = typeof callback  !== "undefined" ? callback  : false;
-		if(!callback){
+		if(!callback) {
 			var future = new Future();
-			HTTP.get("https://slack.com/api/" + method, {
-				params: params
-			}, function(err, message) {
-				if(err) {
-					future.throw(err);
-				} else if(!message.data.ok){
-					future.return(message.data);
-				} else {
-					// Send back the relevant part of the payload.
-					future.return(message.data)
-				}
-			})
+
+			if (method === 'users.admin.invite') {
+				HTTP.post(`https://${params.team}/api/${method}`, { params: params }, (err, message) => {
+					if (err) {
+						console.log('throw');
+						future.throw(err);
+					} else if (!message.data.ok) {
+						console.log('ok false');
+						future.return(message.data)
+					} else {
+						console.log('ok good');
+						future.return(message.data)
+					}
+				});
+			} else {
+				HTTP.get(`https://slack.com/api/${method}`, {
+					params: params
+				}, function(err, message) {
+					if(err) {
+						future.throw(err);
+					} else if(!message.data.ok){
+						future.return(message.data);
+					} else {
+						// Send back the relevant part of the payload.
+						future.return(message.data)
+					}
+				});
+			}
+
 			return future.wait();
 		} else {
-			HTTP.get("https://slack.com/api/" + method, {
+			HTTP.get(`https://slack.com/api/${method}`, {
 				params: params
 			}, function(err, message) {
 				if(err) {
@@ -48,7 +65,6 @@ SlackAPI = {
 			var params = {
 				token:token
 			};
-
 			return SlackAPI._apiCall('auth.test', params, callback);
 		}
 	},
@@ -553,6 +569,17 @@ SlackAPI = {
 
 	//users
 	users:{
+		admin: {
+			invite(token, team, email) {
+				const params = {
+					token,
+					email,
+					team,
+					set_active: 'true'
+				};
+				return SlackAPI._apiCall('users.admin.invite', params);
+			}
+		},
 		getPresence:function(token, callback){
 			var params = {
 				token: token

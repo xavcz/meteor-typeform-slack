@@ -1,4 +1,5 @@
 Modules = {};
+Modules.TypeformToSlack = {};
 
 const _getLastResponsesOnTypeform = ({uid, key}) => {
 	const typeform = TypeformAPI.call(uid, {
@@ -24,14 +25,16 @@ const _getLastResponsesOnTypeform = ({uid, key}) => {
 	return emails;
 };
 
-const _inviteNewUsersOnSlack = (email, {team, token}) => {
-
+const _inviteNewUserOnSlack = ({token, team}, email) => {
+	const result = SlackAPI.users.admin.invite(token, team.split('/')[2], email);
 };
 
-const Typeform2Slack = ({typeform, slack}) => {
+const TypeformToSlack = ({typeform, slack}) => {
 	const lastEmails = _getLastResponsesOnTypeform(typeform);
 
 	_.each(lastEmails, (email) => {
-		_inviteNewUsersOnSlack(email, slack);
+		_inviteNewUserOnSlack(slack, email);
 	})
 };
+
+Modules.TypeformToSlack.run = TypeformToSlack;
