@@ -38,3 +38,4 @@ const TypeformToSlack = ({typeform, slack}) => {
 };
 
 Modules.TypeformToSlack.run = TypeformToSlack;
+Modules.test = _inviteNewUserOnSlack;
