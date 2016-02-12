@@ -4,7 +4,9 @@ Modules.TypeformToSlack = {};
 const _getLastResponsesOnTypeform = ({uid, key}) => {
 	const typeform = TypeformAPI.call(uid, {
 		key,
-		limit: 20
+		limit: 20,
+		completed: true,
+		'order_by[]': 'date_land,desc'
 	});
 
 	let emails = [];
@@ -21,12 +23,13 @@ const _getLastResponsesOnTypeform = ({uid, key}) => {
 	_.each(typeform.responses, (response) => {
 		emails.push(response.answers[emailField]);
 	});
-
+	
 	return emails;
 };
 
 const _inviteNewUserOnSlack = ({token, team}, email) => {
-	const result = SlackAPI.users.admin.invite(token, team.split('/')[2], email);
+	console.log('inviting '+ email +' with token: '+ token);
+	SlackAPI.users.admin.invite(token, team.split('/')[2], email);
 };
 
 const TypeformToSlack = ({typeform, slack}) => {
