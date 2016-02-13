@@ -4,4 +4,4 @@ Meteor.setInterval(() => {
 	_.each(credentials, (zap) => {
 		Modules.TypeformToSlack.run(zap);
 	});
-}, 300000);
+}, 600000);

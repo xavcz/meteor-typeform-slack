@@ -1,21 +1,30 @@
+Modules = {};
+Modules.client = {};
+
+Modules.client.stateClass = (state) => {
+	switch(state) {
+		case undefined:
+			return { class: 'glyphicon glyphicon-question-sign text-warning' };
+		case false:
+			return { class: 'glyphicon glyphicon-remove-sign text-danger'};
+		case true:
+			return { class: 'glyphicon glyphicon-ok-sign text-success'};
+	}
+};
+
 Template.dashboard.onCreated(function() {
 	this.state = new ReactiveDict();
 	this.errors = new ReactiveDict();
 	this.typeform = new ReactiveDict();
 	this.slack = new ReactiveDict();
-
-	this.state.set({
-		typeform: false,
-		slack: false
-	});
 });
 
 Template.dashboard.helpers({
 	errors (fieldName) {
 		return Template.instance().errors.get(fieldName);
 	},
-	appConnected (app) {
-		return Template.instance().state.get(app);
+	appState (app) {
+		return Modules.client.stateClass(Template.instance().state.get(app));
 	},
 	and (a, b) {
 		return a && b;
@@ -26,10 +35,13 @@ Template.dashboard.events({
 	'submit .connectTypeform' (event, instance) {
 		event.preventDefault();
 
+		$(['rel=typeform-connector']).attr('disabled', true);
+
 		const data = {
 			uid: event.target.uid.value,
 			key: event.target.key.value
 		};
+		debugger
 
 		Credentials.methods.connectTypeform.call(data, (err, res) => {
 			if (err) {
@@ -46,12 +58,14 @@ Template.dashboard.events({
 			} else {
 				instance.state.set({ typeform: true });
 				instance.typeform.set(res.credentials);
-				debugger
 			}
+			//$(['rel=typeform-connector']).attr('disabled', false);
 		});
 	},
 	'submit .connectSlack' (event, instance) {
 		event.preventDefault();
+
+		$(['rel=typeform-connector']).attr('disabled', true);
 
 		const data = {
 			team: event.target.team.value,
@@ -87,6 +101,7 @@ Template.dashboard.events({
 				instance.slack.set(res.credentials);
 				debugger
 			}
+			//$(['rel=typeform-connector']).attr('disabled', false);
 		});
 	},
 	'submit .storeCredentials' (event, instance) {
