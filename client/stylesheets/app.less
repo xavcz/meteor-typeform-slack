@@ -1,0 +1,40 @@
+@import 'util/reset.import.less';
+
+// Mixins & utilities
+@import 'util/helpers.import.less';
+@import 'util/lesshat.import.less';
+@import 'util/fontface.import.less';
+@import 'util/text.import.less';
+@import 'util/typography.import.less';
+@import 'util/variables.import.less';
+
+
+body {
+    .position(absolute, 0, 0, 0, 0);
+    background-color: #315481;
+    .background-image( linear-gradient(top, #315481, #918e82 100%) );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: @color-tertiary;
+    font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-style: 400;
+}
+
+.logo {
+	height: 64px;
+	display: block;
+	padding-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.tagline {
+	margin-top: 30px;
+}
+
+.jumbotron {
+  margin-top: 30px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: rgba(49, 84, 129, 0.1);
+}
