@@ -1,5 +1,4 @@
-Modules = {};
-Modules.TypeformToSlack = {};
+Modules.server.inviter = {};
 
 const _getLastResponsesOnTypeform = ({uid, key}) => {
 	const typeform = TypeformAPI.call(uid, {
@@ -40,5 +39,4 @@ const TypeformToSlack = ({typeform, slack}) => {
 	})
 };
 
-Modules.TypeformToSlack.run = TypeformToSlack;
-Modules.test = _inviteNewUserOnSlack;
+Modules.server.inviter.run = TypeformToSlack;
