@@ -11,16 +11,16 @@
               <div class="form-group">
                 <label for="uid">{{input.label}}</label>
                 <input type="text" name="{{input.name}}" />
-                {{#each error in errors input.name}}
-                  <div class="form-error">{{error}}</div>
-                {{/each}}
               </div>
             {{/each}}
             <input type="submit" class="btn btn-success" rel="{{app.name}}-connector" value="Test the connection" />
           </form>
         </div>
         <div class="col-sm-4">
-          <h1><span {{className app.state}}></span></h1>
+          {{#momentum plugin='fade'}}
+            <div class="form-error">{{error}}</div>
+            <h1><span {{stateClass}}></span></h1>
+          {{/momentum}}
         </div>
       </div>
     </div>

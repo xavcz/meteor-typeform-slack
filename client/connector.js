@@ -1,13 +1,15 @@
 Template.connector.onCreated(function () {
-	this.errors = new ReactiveDict();
+	this.error = new ReactiveVar();
 });
 
 Template.connector.helpers({
-	errors (fieldName) {
-		return Template.instance().errors.get(fieldName);
+	error () {
+		return Template.instance().error.get();
 	},
-	className (state) {
-		return Modules.client.stateClass(state);
+	stateClass () {
+		let {app} = Template.currentData();
+		debugger
+		return Modules.client.stateClass(Session.get(app.name));
 	},
 });
 
@@ -24,21 +26,14 @@ Template.connector.events({
 			data[input.name] = event.target[input.name].value;
 		});
 
-		debugger
-
 		Credentials.methods.connect[app.name].call(data, (err, res) => {
-			debugger
-
 			if (err) {
-				const errors = {};
-				_.each(app.form, (input) => {
-					errors[input.name] = [];
-				});
-
-				instance.errors.set(errors);
-
-				console.log('connection failed');
+				instance.error.set(err.reason);
+				Session.set(app.name, false);
+				console.log('connection failed: '+ err.error);
 			} else {
+				instance.error.set('Connection established!');
+				Session.set(app.name, true);
 				console.log('connection established');
 			}
 			$([`rel=${app.name}-connector`]).attr('disabled', false);

@@ -1,12 +1,11 @@
 Template.dashboard.onCreated(function() {
-	this.state = new ReactiveDict();
-	this.errors = new ReactiveDict();
-
+	Session.set('typeform', undefined);
+	Session.set('slack', undefined);
 });
 
 Template.dashboard.helpers({
-	and (a, b) {
-		return a && b;
+	readyToStore () {
+		return Session.get('typeform') && Session.get('slack');
 	},
 	app (name) {
 		return Modules.client.appParams(name);
@@ -14,12 +13,13 @@ Template.dashboard.helpers({
 });
 
 Template.dashboard.events({
-	/*
 	'submit .storeCredentials' (event, instance) {
 		event.preventDefault();
 
-		const typeform = { uid: instance.typeform.get('uid'), key: instance.typeform.get('key') },
-					slack = { team: instance.slack.get('team'), token: instance.slack.get('token') },
+		// XXX Get credentials from local store -> mongo collection null
+
+		const typeform = {},
+					slack = {},
 					email = event.target.email.value;
 
 		const credentials = { typeform, slack, email };
@@ -32,5 +32,4 @@ Template.dashboard.events({
 			}
 		});
 	}
-	*/
 });
