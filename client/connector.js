@@ -8,7 +8,6 @@ Template.connector.helpers({
 	},
 	stateClass () {
 		let {app} = Template.currentData();
-		debugger
 		return Modules.client.stateClass(Session.get(app.name));
 	},
 });
